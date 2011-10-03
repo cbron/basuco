@@ -1,4 +1,4 @@
-module Ken
+module Basuco
   class << self
     attr_accessor :session
   end
@@ -26,8 +26,8 @@ module Ken
   # http://github.com/chriseppstein/freebase/tree
   class Session
     public
-    # Initialize a new Ken Session
-    #   Ken::Session.new(host{String, IO}, username{String}, password{String})
+    # Initialize a new Basuco Session
+    #   Basuco::Session.new(host{String, IO}, username{String}, password{String})
     #
     # @param host<String>          the API host
     # @param username<String>      freebase username
@@ -36,11 +36,11 @@ module Ken
       @host = host
       @username = username
       @password = password
-      
-      Ken.session = self
+      puts "YYYYYYYYYYYEEEEEEEEEEEEEEEEAAAAAAAAAAAAAAAAA"
+      Basuco.session = self
 
       # TODO: check connection
-      Ken.logger.info("connection established.")
+      Basuco.logger.info("connection established.")
     end
     
     SERVICES = {
@@ -68,7 +68,7 @@ module Ken
     # raise an error if the inner response envelope is encoded as an error
     def handle_read_error(inner)
       unless inner['code'][0, '/api/status/ok'.length] == '/api/status/ok'
-        Ken.logger.error "Read Error #{inner.inspect}"
+        Basuco.logger.error "Read Error #{inner.inspect}"
         error = inner['messages'][0]
         raise ReadError.new(error['code'], error['message'])
       end
@@ -79,7 +79,7 @@ module Ken
     # TODO: should support multiple queries
     #       you should be able to pass an array of queries
     def mqlread(query, options = {})
-      Ken.logger.info ">>> Sending Query: #{query.to_json}"
+      Basuco.logger.info ">>> Sending Query: #{query.to_json}"
       cursor = options[:cursor]
       if cursor
         query_result = []
@@ -98,13 +98,13 @@ module Ken
     
     def raw_content(id, options = {})
       response = http_request raw_service_url+id, options
-      Ken.logger.info "<<< Received Raw Content Response: #{response}"
+      Basuco.logger.info "<<< Received Raw Content Response: #{response}"
       response
     end
     
     def blurb_content(id, options = {})
       response = http_request blurb_service_url+id, options
-      Ken.logger.info "<<< Received Blurb Content Response: #{response}"
+      Basuco.logger.info "<<< Received Blurb Content Response: #{response}"
       response
     end
     
@@ -115,12 +115,12 @@ module Ken
       result = JSON.parse response
       inner = result[id]
       handle_read_error(inner)
-      Ken.logger.info "<<< Received Topic Response: #{inner['result'].inspect}"
+      Basuco.logger.info "<<< Received Topic Response: #{inner['result'].inspect}"
       inner['result']
     end
     
     def search(query, options = {})
-      Ken.logger.info ">>> Sending Search Query: #{query}"
+      Basuco.logger.info ">>> Sending Search Query: #{query}"
       options.merge!({:query => query})
       
       response = http_request search_service_url, options
@@ -128,7 +128,7 @@ module Ken
       
       handle_read_error(result)
       
-      Ken.logger.info "<<< Received Topic Response: #{result['result'].inspect}"
+      Basuco.logger.info "<<< Received Topic Response: #{result['result'].inspect}"
       result['result']
     end
 
@@ -142,7 +142,7 @@ module Ken
       result = JSON.parse response
       inner = result['qname']
       handle_read_error(inner)
-      Ken.logger.info "<<< Received Response: #{inner['result'].inspect}"
+      Basuco.logger.info "<<< Received Response: #{inner['result'].inspect}"
       inner
     end
     
@@ -155,7 +155,7 @@ module Ken
     def http_request(url, parameters = {})
       params = params_to_string(parameters)
       url << '?'+params unless params !~ /\S/
-      Ken.logger.info "<<< URL queried: #{url}"
+      Basuco.logger.info "<<< URL queried: #{url}"
             
       return Net::HTTP.get_response(::URI.parse(url)).body
       
@@ -163,7 +163,7 @@ module Ken
       open(fname,"w") do |f|
         f << response
       end
-      Ken.logger.info("Wrote response to #{fname}")
+      Basuco.logger.info("Wrote response to #{fname}")
     end
   end # class Session
-end # module Ken
+end # module Basuco

@@ -1,37 +1,37 @@
 require "time"
 
-# ==== Public Ken Logger API
+# ==== Public Basuco Logger API
 #
-# Logger taken from Merb/Datamapper :)
+# Logger taBasuco from Merb/Datamapper :)
 #
 # To replace an existing logger with a new one:
-#   Ken.logger.set_log(log{String, IO},level{Symbol, String})
+#   Basuco.logger.set_log(log{String, IO},level{Symbol, String})
 #
 # Available logging levels are:
 #   :off, :fatal, :error, :warn, :info, :debug
 #
 # Logging via:
-#   Ken.logger.fatal(message<String>)
-#   Ken.logger.error(message<String>)
-#   Ken.logger.warn(message<String>)
-#   Ken.logger.info(message<String>)
-#   Ken.logger.debug(message<String>)
+#   Basuco.logger.fatal(message<String>)
+#   Basuco.logger.error(message<String>)
+#   Basuco.logger.warn(message<String>)
+#   Basuco.logger.info(message<String>)
+#   Basuco.logger.debug(message<String>)
 #
 # Flush the buffer to
-#   Ken.logger.flush
+#   Basuco.logger.flush
 #
 # Remove the current log object
-#   Ken.logger.close
+#   Basuco.logger.close
 #
-# ==== Private Ken Logger API
+# ==== Private Basuco Logger API
 #
 # To initialize the logger you create a new object, proxies to set_log.
-#   ken::Logger.new(log{String, IO}, level{Symbol, String})
+#   Basuco::Logger.new(log{String, IO}, level{Symbol, String})
 #
 # Logger will not create the file until something is actually logged
-# This avoids file creation on Ken init when it creates the
+# This avoids file creation on Basuco init when it creates the
 # default logger.
-module Ken
+module Basuco
   
   class << self #:nodoc:
     attr_accessor :logger
@@ -53,7 +53,7 @@ module Ken
     #     info:  generic (useful) information about system operation
     #     debug: low-level information for developers
     #
-    #   Ken::Logger::LEVELS[:off, :fatal, :error, :warn, :info, :debug]
+    #   Basuco::Logger::LEVELS[:off, :fatal, :error, :warn, :info, :debug]
     
     LEVELS =
     {
@@ -137,7 +137,7 @@ module Ken
     public
 
     # To initialize the logger you create a new object, proxies to set_log.
-    #   Ken::Logger.new(log{String, IO},level{Symbol, String})
+    #   Basuco::Logger.new(log{String, IO},level{Symbol, String})
     #
     # @param log<IO,String>        either an IO object or a name of a logfile.
     # @param log_level<String>     the message string to be logged
@@ -148,7 +148,7 @@ module Ken
     end
 
     # To replace an existing logger with a new one:
-    #   Ken.logger.set_log(log{String, IO},level{Symbol, String})
+    #   Basuco.logger.set_log(log{String, IO},level{Symbol, String})
     #
     # @param log<IO,String>        either an IO object or a name of a logfile.
     # @param log_level<Symbol>     a symbol representing the log level from
@@ -169,13 +169,13 @@ module Ken
 
       initialize_log(log)
       
-      Ken.logger = self
+      Basuco.logger = self
 
       self.info("Logfile created") if log_creation
     end
 
     # Flush the entire buffer to the log object.
-    #   Ken.logger.flush
+    #   Basuco.logger.flush
     #
     def flush
       return unless @buffer.size > 0
@@ -183,7 +183,7 @@ module Ken
     end
 
     # Close and remove the current log object.
-    #   Ken.logger.close
+    #   Basuco.logger.close
     #
     def close
       flush
@@ -207,7 +207,7 @@ module Ken
     end
     alias << push
 
-    # Generate the following logging methods for Ken.logger as described
+    # Generate the following logging methods for Basuco.logger as described
     # in the API:
     #  :fatal, :error, :warn, :info, :debug
     #  :off only gets a off? method
@@ -230,4 +230,4 @@ module Ken
     end
 
   end # class Logger
-end # module Ken
+end # module Basuco

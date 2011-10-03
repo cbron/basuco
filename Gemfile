@@ -1,12 +1,4 @@
-source 'http://rubygems.org'
+source "http://rubygems.org"
 
-gem 'extlib'
-gem 'json'
-gem 'addressable'
-
-group :development do
-  gem 'rake'
-  gem 'jeweler'
-  gem 'shoulda'
-  gem 'jnunemaker-matchy', '0.4.0'
-end
+# Specify your gem's dependencies in basuco.gemspec
+gemspec

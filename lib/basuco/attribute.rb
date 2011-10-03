@@ -1,4 +1,4 @@
-module Ken
+module Basuco
   class Attribute
     include Extlib::Assertions
     attr_reader :property
@@ -6,14 +6,14 @@ module Ken
     # initializes a resource by json result
     def initialize(data, property)
       assert_kind_of 'data', data, Array
-      assert_kind_of 'property', property, Ken::Property
+      assert_kind_of 'property', property, Basuco::Property
       @data, @property = data, property
     end
     
     # factory method for creating an attribute instance
     # @api semipublic
     def self.create(data, property)
-      Ken::Attribute.new(data, property)
+      Basuco::Attribute.new(data, property)
     end
     
     # @api public
@@ -61,7 +61,7 @@ module Ken
     private
     # initializes the subject if used for the first time
     def subject
-      @subject ||= Ken::Collection.new(@data.map { |r| object_type? ? Ken::Resource.new(r) : r["value"] })
+      @subject ||= Basuco::Collection.new(@data.map { |r| object_type? ? Basuco::Resource.new(r) : r["value"] })
     end
   end
 end
