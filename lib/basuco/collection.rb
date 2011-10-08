@@ -1,4 +1,4 @@
-module Ken
+module Basuco
   class Collection < Array
     # add a linebreak after each entry
     def to_s

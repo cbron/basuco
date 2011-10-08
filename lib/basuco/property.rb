@@ -1,7 +1,7 @@
 module Basuco
   class Property
     
-    include Extlib::Assertions
+    #include Extlib::Assertions
     
     VALUE_TYPES = %w{
      /type/id
@@ -17,8 +17,8 @@ module Basuco
     
     # initializes a resource by json result
     def initialize(data, type)
-      assert_kind_of 'data', data, Hash
-      assert_kind_of 'type', type, Basuco::Type
+      # assert_kind_of 'data', data, Hash
+      # assert_kind_of 'type', type, Basuco::Type
       @data, @type = data, type
     end
     

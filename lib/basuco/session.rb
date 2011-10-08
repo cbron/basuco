@@ -40,7 +40,7 @@ module Basuco
       Basuco.session = self
 
       # TODO: check connection
-      Basuco.logger.info("connection established.")
+     # Basuco.logger.info("connection established.")
     end
     
     SERVICES = {

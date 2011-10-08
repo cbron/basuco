@@ -1,13 +1,12 @@
 # provides an interface to view a subject (resource or topic) as a specific type
 # provides an interface for working with attributes, properties
-module Ken
+module Basuco
   class View
     
-    include Extlib::Assertions
     
     # initializes a subject (resource or topic) by json result
     def initialize(subject, type)
-      assert_kind_of 'type', type, Ken::Type
+    #  assert_kind_of 'type', type, Basuco::Type
       @subject, @type = subject, type
     end
     

@@ -1,6 +1,8 @@
-h1. Ken
+h1. Basuco (In Dev)
 
 h2. Introduction
+
+Basuco is a rails3 update for the original Ken plugin.
 
 Ken is a Data Layer for Knowledge Representation.
 
@@ -13,13 +15,9 @@ Also you can use this library as a Data Layer (instead of or in addition to Acti
 
 h2. Installation
 
-Use "Gemcutter":http://gemcutter.org RubyGems:
-
 <pre>
 <code>
-  $ gem install gemcutter
-  $ gem tumble
-  $ gem install ken
+  $ gem install basuco
 </code>
 </pre>
 

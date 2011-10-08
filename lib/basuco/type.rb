@@ -1,18 +1,18 @@
-module Ken
+module Basuco
   class Type
     
-    include Extlib::Assertions
+   # include Extlib::Assertions
     
     # initializes a resource using a json result
     def initialize(data)
-      assert_kind_of 'data', data, Hash
+     # assert_kind_of 'data', data, Hash
       @data = data
     end
     
     # access property info
     # @api public
     def properties
-      @properties ||= Ken::Collection.new(@data["properties"].map { |property| Ken::Property.new(property, self) })
+      @properties ||= Basuco::Collection.new(@data["properties"].map { |property| Basuco::Property.new(property, self) })
     end
     
     # type id

@@ -1,13 +1,11 @@
-module Ken
+module Basuco
   class Topic
-    include Extlib::Assertions
-    extend Extlib::Assertions
     
     attr_reader :data
     
     # initializes a topic using a json result
     def initialize(data)
-      assert_kind_of 'data', data, Hash
+     # assert_kind_of 'data', data, Hash
       @data = data
       @schema_loaded, @attributes_loaded = false, false
     end
@@ -17,13 +15,13 @@ module Ken
     #
     # == Examples
     #
-    #  Ken::Topic.get('/en/the_police') => #<Topic id="/en/the_police" name="The Police">
+    #  Basuco::Topic.get('/en/the_police') => #<Topic id="/en/the_police" name="The Police">
     # @api public
     def self.get(id)
-      assert_kind_of 'id', id, String
-      result = Ken.session.topic(id)
+      #assert_kind_of 'id', id, String
+      result = Basuco.session.topic(id)
       raise TopicNotFound unless result
-      Ken::Topic.new(result)
+      Basuco::Topic.new(result)
     end
     
     # topic id
@@ -100,7 +98,7 @@ module Ken
     # returns all the properties from all assigned types
     # @api public
     def properties
-      @properties = Ken::Collection.new
+      @properties = Basuco::Collection.new
       types.each do |type|
         @properties.concat(type.properties)
       end
@@ -117,7 +115,7 @@ module Ken
     # returns all available views based on the assigned types
     # @api public
     def views
-      @views ||= Ken::Collection.new(types.map { |type| Ken::View.new(self, type) })
+      @views ||= Basuco::Collection.new(types.map { |type| Basuco::View.new(self, type) })
     end
     
     # returns individual view based on the requested type id
@@ -163,7 +161,7 @@ module Ken
           data["values"].each do |value|
             values << { "id" => value["id"], "name" => value["text"], "value" => value["text"] }
           end
-          @attributes[id] = Ken::Attribute.create(values, properties.select { |p| p.id == id }.first)
+          @attributes[id] = Basuco::Attribute.create(values, properties.select { |p| p.id == id }.first)
         end
       end
       
@@ -186,9 +184,9 @@ module Ken
           "unique" => true 
         }
       end
-      @types = Ken::Collection.new(result.values.map { |type| Ken::Type.new(type) })
+      @types = Basuco::Collection.new(result.values.map { |type| Basuco::Type.new(type) })
       @schema_loaded = true
     end
     
   end # class Topic
-end # module Ken
+end # module Basuco
