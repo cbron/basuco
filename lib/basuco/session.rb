@@ -26,17 +26,13 @@ module Basuco
   # http://github.com/chriseppstein/freebase/tree
   class Session
     public
-    # Initialize a new Basuco Session
-    #   Basuco::Session.new(host{String, IO}, username{String}, password{String})
-    #
     # @param host<String>          the API host
     # @param username<String>      freebase username
     # @param password<String>      user password
-    def initialize(host, username, password)
-      @host = host
-      @username = username
-      @password = password
-      puts "YYYYYYYYYYYEEEEEEEEEEEEEEEEAAAAAAAAAAAAAAAAA"
+    def initialize(options = {:host => 'http://www.freebase.com', :username => 'un', :password => 'pw'})
+      @host = options[:host]
+      @username = options[:username]
+      @password = options[:password]
       Basuco.session = self
 
       # TODO: check connection
@@ -46,15 +42,14 @@ module Basuco
     SERVICES = {
       :mqlread => '/api/service/mqlread',
       :mqlwrite => '/api/service/mqlwrite',
-      :blurb => '/api/trans/blurb',
-      :raw => '/api/trans/raw',
+      :blurb => '/api/trans/blurb/guid/',
+      :raw => '/api/trans/raw/guid/',
       :login => '/api/account/login',
       :upload => '/api/service/upload',
       :topic => '/experimental/topic',
       :search => '/api/service/search'
     }
 
-    # get the service url for the specified service.
     def service_url(svc)
       "#{@host}#{SERVICES[svc]}"
     end
@@ -95,6 +90,28 @@ module Basuco
       end
       query_result
     end
+
+
+      # Executes an Mql Query against the Freebase API and returns the result as
+    # a <tt>Collection</tt> of <tt>Resources</tt>.
+    def all(options = {})
+      #assert_kind_of 'options', options, Hash
+      query = { :name => nil }.merge!(options).merge!(:id => nil)
+      result = Basuco.session.mqlread([ query ], :cursor => !options[:limit])    
+      Basuco::Collection.new(result.map { |r| Basuco::Resource.new(r) })
+    end
+
+      
+    # Executes an Mql Query against the Freebase API and returns the result wrapped
+    # in a <tt>Resource</tt> Object.
+    #
+    # == Examples
+    #
+    #  Basuco.get('/en/the_police') => #<Resource id="/en/the_police" name="The Police">
+    # @api public
+    def self.get(id)
+      Basuco::Resource.get(id)
+    end
     
     def raw_content(id, options = {})
       response = http_request raw_service_url+id, options
@@ -110,8 +127,9 @@ module Basuco
     
     def topic(id, options = {})
       options.merge!({:id => id})
-      
+
       response = http_request topic_service_url+"/standard", options
+            --debugger
       result = JSON.parse response
       inner = result[id]
       handle_read_error(inner)

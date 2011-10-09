@@ -2,31 +2,15 @@ h1. Basuco (In Dev)
 
 h2. Introduction
 
-Basuco is a rails3 update for the original Ken plugin.
+Basuco is a rails3 update in the form of a gem for the original Ken plugin.
 
-Ken is a Data Layer for Knowledge Representation.
-
-It's being built to access the Metaweb Services supplied by Freebase.com.
-The project’s goals are the provision of a concise API for querying and writing.
-Therefore it wraps the Metaweb Architecture to smart Ruby Objects.
-
-You can navigate the Freebase Graph using a rubyish syntax.
-Also you can use this library as a Data Layer (instead of or in addition to ActiveRecord/DataMapper) for your Web Framework of choice (Merb, Rails).
+It provides simple syntax to interact with the freebase api, and wraps responses in handy ruby objects.
 
 h2. Installation
 
 <pre>
 <code>
   $ gem install basuco
-</code>
-</pre>
-
-In your Ruby files add:
-
-<pre>
-<code>
-  require 'rubygems'
-  require 'ken'
 </code>
 </pre>
 
@@ -123,7 +107,6 @@ In order to be able to use unique and non-unique Attributes in the same manner w
 in a Collection, no matter if there's one value or there are many.
 
 h3. Group Attributes by their Type using Views
-
 
 <pre>
 <code>

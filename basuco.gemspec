@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.name        = "basuco"
   s.version     = Basuco::VERSION
   s.authors     = ["Caleb Bron"]
-  s.email       = ["calebbron@gmail.com"]
+  s.email       = [""]
   s.homepage    = ""
   s.summary     = %q{Freebase Wrapper}
   s.description = %q{Connect information from freebase.com through ruby.}

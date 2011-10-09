@@ -127,7 +127,7 @@ module Basuco
     # @api private
     def fetch_data
       return @data if @data["/type/reflect/any_master"]
-      @data = Basuco.session.mqlread(FETCH_DATA_QUERY.merge!(:id => id))
+      @data = Basuco.session.mqlread(define_query.merge!(:id => id))
     end
     
     # loads the full set of attributes using reflection
@@ -160,6 +160,55 @@ module Basuco
       fetch_data unless data_fetched?
       @types = Basuco::Collection.new(@data["Basuco:type"].map { |type| Basuco::Type.new(type) })
       @schema_loaded = true
+    end
+
+    def define_query
+        {
+        # :id => id, # needs to be merge!d in instance method
+        :guid => nil,
+        :name => nil,
+        :"Basuco:type" => [{
+          :id => nil,
+          :name => nil,
+          :properties => [{
+            :id => nil,
+            :name => nil,
+            :expected_type => nil,
+            :unique => nil,
+            :reverse_property => nil,
+            :master_property => nil,
+          }]
+        }],
+        :"/type/reflect/any_master" => [
+          {
+            :id => nil,
+            :link => nil,
+            :name => nil,
+            :optional => true,
+            :limit => 999999
+          }
+        ],
+        :"/type/reflect/any_reverse" => [
+          {
+            :id => nil,
+            :link => nil,
+            :name => nil,
+            :optional => true,
+            :limit => 999999
+          }
+        ],
+        :"/type/reflect/any_value" => [
+          {
+            :link => nil,
+            :value => nil,
+            :optional => true,
+            :limit => 999999
+            # TODO: support multiple language
+            # :lang => "/lang/en",
+            # :type => "/type/text"
+          }
+        ]
+      }
     end
   end # class Resource
 end # module Basuco
