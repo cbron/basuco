@@ -29,6 +29,8 @@ provided by Freebase.
 
 In addition, you can learn a lot by employing the Freebase "Query Editor":http://www.freebase.com/tools/queryeditor/.
 
+With no registration you get 100K API calls per 24 hours, and more is available along with writing through registration.
+
 h3. Fetching a Resource
 
 Let's ask Ken what he knows about the British Band New Order.

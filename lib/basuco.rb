@@ -15,8 +15,12 @@ end # module Basuco
 
 #todo
 
-#
+#search = search,mql's, session = login/logout, status, trans = images, blurbs
+#status all-in-one
+
 #re-structure
+#check all calls, add and modify
+#writing ?
 #rspec's
 
 #write wd
