@@ -33,11 +33,22 @@ With no registration you get 100K API calls per 24 hours, and more is available 
 
 h3. Fetching a Resource
 
-Let's ask Ken what he knows about the British Band New Order.
+Interaction with freebase occurs in three major ways. 
+
+First and most obvious is searching which will return collections built of resources, in turn built of properties.
+<pre><code>x = Basuco::Search.new</code></pre>
+Second is trans. The trans section is used for getting large chunks of text and images with their guid's.
+<pre><code>x = Basuco::Trans.new</code></pre>
+Lastly comes the Api for non-functional methods like logging in or checking the status of the api. 
+<pre><code>x = Basuco::Api.new</code></pre>
+
+Lets start with an example:
 
 <pre>
 <code>
-  resource = Ken.get('/en/new_order') # => <Resource id="/en/new_order" name="New Order">
+  x = Basuco::Search.new
+  x.get('/en/new_order') 
+    # => <Resource id="/en/new_order" name="New Order">
 </code>
 </pre>
 
