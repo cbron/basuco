@@ -8,7 +8,7 @@ module Basuco
     def initialize(data)
       #assert_kind_of 'data', data, Hash
       @schema_loaded, @attributes_loaded, @data = false, false, data
-      @data_fechted = data["/type/reflect/any_master"] != nil
+      @data_fetched = data["/type/reflect/any_master"] != nil
     end
     
     # Executes an Mql Query against the Freebase API and returns the result wrapped
@@ -20,7 +20,8 @@ module Basuco
     # @api public
     def self.get(id)
      # assert_kind_of 'id', id, String
-      result = Basuco.session.mqlread(FETCH_DATA_QUERY.merge!(:id => id))
+      arr = Resource.define_query
+      result = Basuco.session.mqlread(arr.merge!(:id => id))
       raise ResourceNotFound unless result
       Basuco::Resource.new(result)
     end
@@ -120,7 +121,9 @@ module Basuco
     def data_fetched?
       @data_fetched
     end
+
     
+
     private
     # executes the fetch data query in order to load the full set of types, properties and attributes
     # more info at http://lists.freebase.com/pipermail/developers/2007-December/001022.html
@@ -162,7 +165,7 @@ module Basuco
       @schema_loaded = true
     end
 
-    def define_query
+    def self.define_query
         {
         # :id => id, # needs to be merge!d in instance method
         :guid => nil,

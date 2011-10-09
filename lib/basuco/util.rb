@@ -1,4 +1,4 @@
-module Ken
+module Basuco
   module Util
     # magic hash conversion
     def convert_hash(source)
@@ -15,4 +15,3 @@ module Ken
     module_function :convert_hash
   end
 end
-

@@ -1,13 +1,12 @@
-require 'pathname'
 require 'rubygems'
+require 'pathname'
 
 EXAMPLES_ROOT = Pathname(__FILE__).dirname.expand_path
-require EXAMPLES_ROOT.parent + 'lib/ken'
+require EXAMPLES_ROOT.parent + 'lib/basuco'
 
-Ken::Logger.new(STDOUT, :info)
-Ken::Session.new('http://www.freebase.com', 'ma', 'xxxxx')
+session = Basuco::Session.new
 
-resource = Ken.get('/en/the_police')
+resource = session.get('/en/tiesto') #basically everything starts with /en/
 
 resource.views.each do |view|
   puts view

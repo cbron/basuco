@@ -36,7 +36,6 @@ module Basuco
       Basuco.session = self
 
       # TODO: check connection
-     # Basuco.logger.info("connection established.")
     end
     
     SERVICES = {
@@ -63,7 +62,6 @@ module Basuco
     # raise an error if the inner response envelope is encoded as an error
     def handle_read_error(inner)
       unless inner['code'][0, '/api/status/ok'.length] == '/api/status/ok'
-        Basuco.logger.error "Read Error #{inner.inspect}"
         error = inner['messages'][0]
         raise ReadError.new(error['code'], error['message'])
       end
@@ -74,7 +72,6 @@ module Basuco
     # TODO: should support multiple queries
     #       you should be able to pass an array of queries
     def mqlread(query, options = {})
-      Basuco.logger.info ">>> Sending Query: #{query.to_json}"
       cursor = options[:cursor]
       if cursor
         query_result = []
@@ -109,19 +106,17 @@ module Basuco
     #
     #  Basuco.get('/en/the_police') => #<Resource id="/en/the_police" name="The Police">
     # @api public
-    def self.get(id)
+    def get(id)
       Basuco::Resource.get(id)
     end
     
     def raw_content(id, options = {})
       response = http_request raw_service_url+id, options
-      Basuco.logger.info "<<< Received Raw Content Response: #{response}"
       response
     end
     
     def blurb_content(id, options = {})
       response = http_request blurb_service_url+id, options
-      Basuco.logger.info "<<< Received Blurb Content Response: #{response}"
       response
     end
     
@@ -133,12 +128,10 @@ module Basuco
       result = JSON.parse response
       inner = result[id]
       handle_read_error(inner)
-      Basuco.logger.info "<<< Received Topic Response: #{inner['result'].inspect}"
       inner['result']
     end
     
     def search(query, options = {})
-      Basuco.logger.info ">>> Sending Search Query: #{query}"
       options.merge!({:query => query})
       
       response = http_request search_service_url, options
@@ -146,7 +139,6 @@ module Basuco
       
       handle_read_error(result)
       
-      Basuco.logger.info "<<< Received Topic Response: #{result['result'].inspect}"
       result['result']
     end
 
@@ -160,7 +152,6 @@ module Basuco
       result = JSON.parse response
       inner = result['qname']
       handle_read_error(inner)
-      Basuco.logger.info "<<< Received Response: #{inner['result'].inspect}"
       inner
     end
     
@@ -173,7 +164,6 @@ module Basuco
     def http_request(url, parameters = {})
       params = params_to_string(parameters)
       url << '?'+params unless params !~ /\S/
-      Basuco.logger.info "<<< URL queried: #{url}"
             
       return Net::HTTP.get_response(::URI.parse(url)).body
       
@@ -181,7 +171,6 @@ module Basuco
       open(fname,"w") do |f|
         f << response
       end
-      Basuco.logger.info("Wrote response to #{fname}")
     end
   end # class Session
 end # module Basuco
