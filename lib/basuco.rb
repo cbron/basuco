@@ -4,7 +4,7 @@ require 'json'
 Dir[File.dirname(__FILE__) + '/basuco/*.rb'].each {|file| require file }
 
 # init default session
-Basuco::Session.new
+Basuco::Search.new
 
 module Basuco
 

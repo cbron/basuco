@@ -4,7 +4,7 @@ require 'pathname'
 EXAMPLES_ROOT = Pathname(__FILE__).dirname.expand_path
 require EXAMPLES_ROOT.parent + 'lib/basuco'
 
-session = Basuco::Session.new
+session = Basuco::Search.new
 
 resource = session.get('/en/tiesto') #basically everything starts with /en/
 

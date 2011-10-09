@@ -21,7 +21,7 @@ module Basuco
     def self.get(id)
      # assert_kind_of 'id', id, String
       arr = Resource.define_query
-      result = Basuco.session.mqlread(arr.merge!(:id => id))
+      result = Basuco.search.mqlread(arr.merge!(:id => id))
       raise ResourceNotFound unless result
       Basuco::Resource.new(result)
     end
@@ -130,7 +130,7 @@ module Basuco
     # @api private
     def fetch_data
       return @data if @data["/type/reflect/any_master"]
-      @data = Basuco.session.mqlread(define_query.merge!(:id => id))
+      @data = Basuco.search.mqlread(define_query.merge!(:id => id))
     end
     
     # loads the full set of attributes using reflection

@@ -19,7 +19,7 @@ module Basuco
     # @api public
     def self.get(id)
       #assert_kind_of 'id', id, String
-      result = Basuco.session.topic(id)
+      result = Basuco.search.topic(id)
       raise TopicNotFound unless result
       Basuco::Topic.new(result)
     end
