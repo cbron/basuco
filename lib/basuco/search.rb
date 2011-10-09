@@ -1,31 +1,12 @@
 module Basuco
-  require 'request'
   class << self
     attr_accessor :search
   end
   
-  # A class for returing errors from the freebase api.
-  # For more infomation see the freebase documentation:
-  class ReadError < ArgumentError
-    attr_accessor :code, :msg
-    def initialize(code,msg)
-      self.code = code
-      self.msg = msg
-    end
-    def message
-      "#{code}: #{msg}"
-    end
-  end
-  
-  class AttributeNotFound < StandardError ; end
-  class PropertyNotFound < StandardError ; end
-  class ResourceNotFound < StandardError ; end
-  class TopicNotFound < StandardError ; end
-  class ViewNotFound < StandardError ; end
-  
   # partially taken from chris eppstein's freebase api
   # http://github.com/chriseppstein/freebase/tree
   class Search
+    include Request
     public
     # @param host<String>          the API host
     # @param username<String>      freebase username
@@ -39,39 +20,6 @@ module Basuco
       # TODO: check connection
     end
     
-    SERVICES = {
-      :mqlread => '/api/service/mqlread',
-      :mqlwrite => '/api/service/mqlwrite',
-      :blurb => '/api/trans/blurb/guid/',
-      :raw => '/api/trans/raw/guid/',
-      :login => '/api/account/login', #not done
-      :logout => '/api/account/logout', #not done
-      :upload => '/api/service/upload',
-      :topic => '/experimental/topic',
-      :search => '/api/service/search',
-      :status => '/api/status', #not done
-      :thumb => 'api/trans/image_thumb'
-
-    }
-
-    def service_url(svc)
-      "#{@host}#{SERVICES[svc]}"
-    end
-
-    SERVICES.each_key do |k|
-      define_method("#{k}_service_url") do
-        service_url(k)
-      end
-    end
-
-    # raise an error if the inner response envelope is encoded as an error
-    def handle_read_error(inner)
-      unless inner['code'][0, '/api/status/ok'.length] == '/api/status/ok'
-        error = inner['messages'][0]
-        raise ReadError.new(error['code'], error['message'])
-      end
-    end # handle_read_error
-
     # Perform a mqlread and return the results
     # Specify :cursor => true to batch the results of a query, sending multiple requests if necessary.
     # TODO: should support multiple queries
@@ -99,7 +47,7 @@ module Basuco
     def all(options = {})
       #assert_kind_of 'options', options, Hash
       query = { :name => nil }.merge!(options).merge!(:id => nil)
-      result = Basuco.search.mqlread([ query ], :cursor => !options[:limit])    
+      result = mqlread([ query ], :cursor => !options[:limit])    
       Basuco::Collection.new(result.map { |r| Basuco::Resource.new(r) })
     end
 

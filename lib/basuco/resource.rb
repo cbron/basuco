@@ -1,7 +1,5 @@
 module Basuco
   class Resource
-    # include Extlib::Assertions
-    # extend Extlib::Assertions
     attr_reader :data
     
     # initializes a resource using a json result
