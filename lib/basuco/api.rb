@@ -12,20 +12,6 @@ module Basuco
       Basuco.api = self
     end
 
-    #yes or no
-    def status?
-      response = http_request status_service_url
-      result = JSON.parse response
-      return result["code"] == "/api/status/ok"
-    end
-
-    #hash of all statuses
-    def check_statuses
-      response = http_request status_service_url
-      result = JSON.parse response
-      result
-    end
-
     def api(options = {})
       options.merge!({:query => query})
       

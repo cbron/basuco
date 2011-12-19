@@ -62,16 +62,7 @@ module Basuco
     def get(id)
       Basuco::Resource.get(id)
     end
-    
-    def raw_content(id, options = {})
-      response = http_request raw_service_url+id, options
-      response
-    end
-    
-    def blurb_content(id, options = {})
-      response = http_request blurb_service_url+id, options
-      response
-    end
+
     
     def topic(id, options = {})
       options.merge!({:id => id})
@@ -94,6 +85,16 @@ module Basuco
       
       result['result']
     end
+
+    
+    #yes or no
+    def status?
+      response = http_request status_service_url
+      result = JSON.parse response
+      return result["code"] == "/api/status/ok"
+    end
+
+
 
   end # class Search
 end # module Basuco

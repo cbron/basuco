@@ -3,12 +3,15 @@ require 'json'
 
 Dir[File.dirname(__FILE__) + '/basuco/*.rb'].each {|file| require file }
 
-# init default session
-Basuco::Search.new
-
 module Basuco
+    include Request
 
-
+    #hash of all statuses
+    def self.check_statuses
+      response = http_request status_service_url
+      result = JSON.parse response
+      result
+    end
   
 end # module Basuco
 
