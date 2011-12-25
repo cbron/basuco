@@ -53,7 +53,6 @@ module Request
       end
     end # handle_read_error
 
-    private
     # returns parsed json response from freebase mqlread service
     def get_query_response(query, cursor=nil)
       envelope = { :qname => {:query => query, :escape => false }}

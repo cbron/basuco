@@ -6,6 +6,7 @@ module Basuco
   # partially taken from chris eppstein's freebase api
   # http://github.com/chriseppstein/freebase/tree
   class Search
+    include Request
     public
     # @param host<String>          the API host
     # @param username<String>      freebase username
