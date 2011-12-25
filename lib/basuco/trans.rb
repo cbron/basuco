@@ -6,7 +6,6 @@ module Basuco
   # partially taken from chris eppstein's freebase api
   # http://github.com/chriseppstein/freebase/tree
   class Trans
-    include Request
 
     def initialize(options = {:host => 'http://www.freebase.com', :username => 'un', :password => 'pw'})
       @host = options[:host]
