@@ -1,9 +1,22 @@
 require 'net/http'
 require 'json'
 
-Dir[File.dirname(__FILE__) + '/basuco/*.rb'].each {|file| require file }
+require 'basuco/request.rb'
+require 'basuco/api.rb'
+require 'basuco/attribute.rb'
+require 'basuco/collection.rb'
+require 'basuco/property.rb'
+require 'basuco/topic.rb'
+require 'basuco/search.rb'
+require 'basuco/trans.rb'
+require 'basuco/type.rb'
+require 'basuco/util.rb'
+require 'basuco/type.rb'
+require 'basuco/version.rb'
+require 'basuco/view.rb'
 
 module Basuco
+    include Request
 
     #hash of all statuses
     def self.check_statuses
