@@ -4,7 +4,6 @@ module Basuco
   end
 
   class Api
-    include Request
     def initialize(options = {:host => 'http://www.freebase.com', :username => 'un', :password => 'pw'})
       @host = options[:host]
       @username = options[:username]

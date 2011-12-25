@@ -6,11 +6,7 @@ module Basuco
   # partially taken from chris eppstein's freebase api
   # http://github.com/chriseppstein/freebase/tree
   class Search
-    include Request
-    public
-    # @param host<String>          the API host
-    # @param username<String>      freebase username
-    # @param password<String>      user password
+
     def initialize(options = {:host => 'http://www.freebase.com', :username => 'un', :password => 'pw'})
       @host = options[:host]
       @username = options[:username]
