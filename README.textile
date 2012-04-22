@@ -1,6 +1,6 @@
 h1. Basuco
 
-h3.
+h3. Status
 
 Currently this gem only supports the Search and Trans functionality. 
 
