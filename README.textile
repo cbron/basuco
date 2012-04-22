@@ -1,4 +1,8 @@
-h1. Basuco (In Dev)
+h1. Basuco
+
+h3.
+
+Currently this gem only supports the Search and Trans functionality. 
 
 h2. Introduction
 
